@@ -6,7 +6,7 @@ base_path = sys.path[0]+'/'
     The following file contains code that reads and writes a js object from/to
     server.js that contains info(ip,port) about server
 '''
-
+#print(base_path)
 def set_url(url1):
     #validation of url -- remaining
     base_url = url1.strip()
@@ -29,5 +29,7 @@ cmd = sys.argv[1:]
 if len(cmd)==2 and cmd[0]=='set-url':
     set_url(cmd[1])
 
-if len(cmd)==1 and cmd[0]=='info':
+elif len(cmd)==1 and cmd[0]=='info':
     print(open(base_path+'server.js').read())
+else:
+    print("invalid request")

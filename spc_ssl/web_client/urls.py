@@ -1,0 +1,12 @@
+from django.conf.urls import url
+from django.views.generic import ListView ,TemplateView
+from . import views
+
+urlpatterns = [
+    url('^sign_up',views.sign_up,name='sign_up'),
+    url('^reset_password',views.reset_password,name='reset_password'),
+    url('^login',views.login,name='login'),
+
+]
+#more ideas :
+# deactivate account
