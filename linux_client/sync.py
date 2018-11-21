@@ -3,6 +3,9 @@ import os,sys
 import requests
 import pickle
 import hashlib
+import detect_type
+import en_de
+
 '''
     this script syncs file/dir to server whose info is given in server.js
     when given argument it sync only that particular file/directory
@@ -25,10 +28,12 @@ password = cjs['password']
 #detect type and all other stuff
 def file_to_dict(file):
     d = {}
-    d['ftype'] = ".txt"
+    tp = detect_type.detect_type(file)
+    d['ftype'] = tp[0]
+    d['fdesc'] = tp[1]
     d['fname'] = file
     d['fpath'] = file
-    d['md5sum'] = hashlib.md5(open(file,'r').read().encode()).hexdigest()
+    d['md5sum'] = hashlib.md5(open(file,'rb').read()).hexdigest()
     return d
 
 
@@ -43,8 +48,11 @@ def absoluteFilePaths(directory):
 def sync_file(file):
     #file is file abs path
     data = file_to_dict(file)
+    
     try:
-        files = {'file':open(file,'rb')}
+        en_de.encrypt(file,base_path+'tmp.aes')
+        files = {'file':open(base_path+'tmp.aes','rb')}
+
     except:
         print('''Failed : File not found in its added location
                     Maybe its deleted''')
@@ -55,6 +63,7 @@ def sync_file(file):
         s = pickle.load(pickle_in)
         pickle_in.close()
         res = s.post(url=url,files=files,data=data).text
+        os.remove(base_path+'tmp.aes')
         pickle_out = open(base_path+'session.p','wb')
         pickle.dump(s,pickle_out)
         pickle_out.close()

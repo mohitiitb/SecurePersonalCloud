@@ -11,8 +11,10 @@ base_path = sys.path[0]+'/'
     handles everything related to en-de
 
 '''
+schema = 'AES'
 
-def encrypt(file,schema,save_as):
+def encrypt(file,save_as):
+
         if schema=='AES':
             pickle_in = open(base_path+'aes.p','rb')
             passwd = pickle.load(pickle_in)
@@ -23,7 +25,7 @@ def encrypt(file,schema,save_as):
             sys.exit(2)
 
 
-def decrypt(file,schema,save_as):
+def decrypt(file,save_as):
         if schema=='AES':
             pickle_in = open(base_path+'aes.p','rb')
             passwd = pickle.load(pickle_in)
