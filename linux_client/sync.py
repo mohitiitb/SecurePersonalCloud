@@ -2,6 +2,7 @@ import json
 import os,sys
 import requests
 import pickle
+import hashlib
 '''
     this script syncs file/dir to server whose info is given in server.js
     when given argument it sync only that particular file/directory
@@ -27,6 +28,7 @@ def file_to_dict(file):
     d['ftype'] = ".txt"
     d['fname'] = file
     d['fpath'] = file
+    d['md5sum'] = hashlib.md5(open(file,'r').read().encode()).hexdigest()
     return d
 
 
@@ -62,7 +64,8 @@ def sync_file(file):
     except:
 
         #more error handling required
-        print("Please login first")
+        print("Please login first!")
+        sys.exit(2)
 
 
 

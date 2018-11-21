@@ -49,7 +49,8 @@ Written by Undefined Variables.
          else
              exec python3 "$base_path"sync.py
          fi;;
-    status) cat "$base_path"observe.js;;
+    #status) cat "$base_path"observe.js;;
+    status) exec python3 "$base_path"status.py;;
     viewUploads) exec python3 "$base_path"fetch.py 0;;
     download) exec python3 "$base_path"fetch.py 1 ;;
 

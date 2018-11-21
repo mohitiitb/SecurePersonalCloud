@@ -37,7 +37,8 @@ def viewUploads():
     except:
 
 
-        return "#FAIL:Not Logged In"
+        print("#FAIL:Not Logged In")
+        sys.exit()
 
 def download(fpath):
     url = sjs['base_url'] + 'file_download/'
@@ -63,8 +64,10 @@ def download(fpath):
 
 
 
+
 if sys.argv[1]=='0':
     res = viewUploads()
+    print(res)
     if isinstance(res,str) and res.startswith('#FAIL'):
         print(res)
     else:
