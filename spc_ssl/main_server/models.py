@@ -13,7 +13,9 @@ class global_data(models.Model):
     user = models.ForeignKey('registered_clients',on_delete=models.CASCADE)
     file = models.BinaryField(max_length=1000)
     fname = models.CharField(max_length=100)
+    md5sum = models.CharField(max_length=50)
     ftype = models.CharField(max_length=50)
+    fdesc = models.CharField(max_length=1000)
     fpath = models.CharField(max_length=100)
 
     class Meta:
