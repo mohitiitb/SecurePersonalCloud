@@ -44,6 +44,11 @@ Written by Undefined Variables.
          else
              exec python3 "$base_path"remove_from_observe.py
          fi;;
+    en-de) if [[ $# -gt 1 ]];then
+             exec python3 "$base_path"en_de.py $2
+         else
+             echo "---usage---"
+         fi;;
     sync) if [[ $# -gt 1 ]];then
              exec python3 "$base_path"sync.py "`realpath $2`"
          else

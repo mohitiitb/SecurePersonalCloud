@@ -5,6 +5,7 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 code = 'ritikroongta'
 key = RSA.generate(2048)
 encrypted_key = key.exportKey(passphrase=code, pkcs=8)
+
 data=""
 with open('inp.txt', 'rb') as f:
 	data=f.read()
