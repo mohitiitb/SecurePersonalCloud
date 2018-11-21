@@ -148,6 +148,8 @@ def file_upload(request):
 
             #file = my_file_upload_form.cleaned_data['file']
             ftype = my_file_upload_form.cleaned_data['ftype']
+            fdesc = my_file_upload_form.cleaned_data['fdesc']
+            md5sum = my_file_upload_form.cleaned_data['md5sum']
             fname = my_file_upload_form.cleaned_data['fname']
             fpath = my_file_upload_form.cleaned_data['fpath']
 
@@ -157,7 +159,9 @@ def file_upload(request):
                 #for now allow same file to be uploaded again will look into it later
                 entry = global_data(user_id=id,
                                     ftype=ftype,
+                                    md5sum = md5sum,
                                     fname=fname,
+                                    fdesc=fdesc,
                                     file=request.FILES['file'].read(),
                                     fpath=fpath
                                     )
@@ -191,6 +195,27 @@ def file_view(request):
     else:
         return HttpResponse('#FAIL:Get method not allowed#')
 
+@csrf_exempt
+def get_md5(request):
+    if request.method == "POST":
+        if request.session.has_key('id'):
+            id = request.session['id']
+
+            #for now allow same file to be uploaded again will look into it later
+            entries = global_data.objects.filter(user_id=id).values_list("fpath","md5sum")
+            l = {}
+            for e in entries:
+                #l.append(list(e[0].strip().split('/')))
+                l[e[0].strip()] = e[1].strip()
+
+            #T = str(buildTree(l))
+            return HttpResponse(json.dumps(l))
+
+        else:
+
+            return HttpResponse('#FAIL:Not Logged In#')
+    else:
+        return HttpResponse('#FAIL:Get method not allowed#')
 
 
 @csrf_exempt

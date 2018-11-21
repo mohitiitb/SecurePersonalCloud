@@ -35,4 +35,4 @@ def detect_type(filepath):
     extension=extension[::-1]
     info=magic.from_file(filepath)
     type=get_type(extension)
-    return (type,extension, info)
+    return (type, info)
