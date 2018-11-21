@@ -6,6 +6,32 @@ if len(password)<24:
 		password=password+" "
 else:
 	password=password[0:24]
+
+#binary_stream = io.BytesIO()
+#data=""
+import base64
+with open("video.mp4",'rb') as f:
+	#global data 
+	data = f.read()
+	encoded=base64.encodestring(data)
+k=pyDes.triple_des(password, pyDes.CBC, b"\0\0\0\0\0\0\0\0", pad=None, padmode=pyDes.PAD_PKCS5)
+d=k.encrypt(encoded)
+with open("enc_des.des",'wb') as f:
+	f.write(d)
+e=k.decrypt(d)
+decoded=base64.decodestring(e)
+
+
+with open("output.mp4",'wb') as f:
+	f.write(decoded)
+
+
+
+# binary_stream.write(data.encode('utf-8'))
+# binary_stream.seek(0)
+# stream_data = binary_stream.read()
+# print(type(stream_data))
+# print(stream_data)
 #image
 # import os
 # import io
@@ -41,22 +67,22 @@ else:
 
 
 #pdf
-import PyPDF2 
+# import PyPDF2 
 
-data=""
-pdfFileObj = open('elec_notes.pdf', 'rb') 
-pdfReader = PyPDF2.PdfFileReader(pdfFileObj) 
-numPages=pdfReader.numPages
-for i in range(numPages):
-	pageObj = pdfReader.getPage(i)
-	data=data+pageObj.extractText()  
-pdfFileObj.close() 
+# data=""
+# pdfFileObj = open('elec_notes.pdf', 'rb') 
+# pdfReader = PyPDF2.PdfFileReader(pdfFileObj) 
+# numPages=pdfReader.numPages
+# for i in range(numPages):
+# 	pageObj = pdfReader.getPage(i)
+# 	data=data+pageObj.extractText()  
+# pdfFileObj.close() 
 
-k=pyDes.triple_des(password, pyDes.CBC, b"\0\0\0\0\0\0\0\0", pad=None, padmode=pyDes.PAD_PKCS5)
-d=k.encrypt(data)
-with open("pdf.des",'wb') as f:
-	f.write(d)
-e=k.decrypt(d)
-pdfWriter = PyPDF2.PdfFileWriter()
-with open("des.pdf",'wb') as f:
-	pdfWriter.write(d)
+# k=pyDes.triple_des(password, pyDes.CBC, b"\0\0\0\0\0\0\0\0", pad=None, padmode=pyDes.PAD_PKCS5)
+# d=k.encrypt(data)
+# with open("pdf.des",'wb') as f:
+# 	f.write(d)
+# e=k.decrypt(d)
+# pdfWriter = PyPDF2.PdfFileWriter()
+# with open("des.pdf",'wb') as f:
+# 	pdfWriter.write(d)
