@@ -1,0 +1,118 @@
+.\" Manpage for SPC.
+.\" Contact mohitmailac@gmail.com to correct errors or typos.
+.TH man 8 "21 November 2018" "1.0" "SPC man page"
+
+.SH NAME
+spc \- Secure Personal Cloud 
+
+.SH SYNOPSIS
+spc [OPTIONS] ..
+
+.SH DESCRIPTION
+This manual page documents the GNU version of spc client.
+.PP
+Secure Personal Cloud is a cloud based file system like dropbox. The difference being that here, user has complete control over encryption schema of data that is uploaded to the server.
+
+*******************************************************************
+.SH OPTIONS/EXAMPLES
+
+.TP \w'man\ 'u
+.B spc help
+Getting help with the 
+.I options
+So that you don't have look into the manaual everytime :)
+
+
+.TP
+
+\fBspc server \fIset-url \fB[URL]
+Allows to set url for the server.
+
+.TP
+
+\fBspc server \fIinfo
+Prints information about the server.
+
+.TP
+
+
+\fBspc client \fIsign_up
+Prints information about the client.
+
+.TP
+
+
+\fBspc client \fIreset_password
+Prints information about the client.
+
+.TP
+
+
+\fBspc client \fIlogin
+Prints information about the client.
+
+.TP
+
+
+\fBspc client \fIlogout
+Prints information about the client.
+
+.TP
+
+
+\fBspc client \fIedit
+Prints information about the client.
+
+.TP
+
+
+\fBspc client \fIinfo
+Prints information about the client.
+
+.TP
+
+
+\fBspc observe \fB[DIR/FILE PATH]
+Prints information about the client.
+
+.TP
+
+
+\fBspc ignore \fB[DIR/FILE PATH]
+Prints information about the client.
+
+.TP
+
+
+\fBspc en-de \fB[SCHEMA]
+Prints information about the client.
+
+.TP
+
+\fBspc sync \fB[DIR/FILE PATH]
+Prints information about the client.
+
+.TP
+
+\fBspc status
+Prints information about the client.
+
+.TP
+
+\fBspc viewUploads
+Prints information about the client.
+
+.TP
+
+\fBspc download
+Prints information about the client.
+
+.TP
+
+
+*****************************************************************
+.SH BUGS
+No known bugs so far.
+
+.SH AUTHOR
+Undefined Variables :)
