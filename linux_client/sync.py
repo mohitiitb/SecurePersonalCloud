@@ -5,6 +5,7 @@ import pickle
 import hashlib
 import detect_type
 import en_de
+import re
 
 '''
     this script syncs file/dir to server whose info is given in server.js
@@ -49,11 +50,12 @@ def sync_file(file):
     #file is file abs path
     data = file_to_dict(file)
 
-    if True:
+    try:
         en_de.encrypt(file,base_path+'tmp.aes')
+        orig_md5 = hashlib.md5(open(base_path+'tmp.aes','rb').read()).hexdigest()
         files = {'file':open(base_path+'tmp.aes','rb')}
 
-    else:
+    except:
         print('''Failed : File not found in its added location
                     Maybe its deleted''')
         return
@@ -67,8 +69,18 @@ def sync_file(file):
         pickle_out = open(base_path+'session.p','wb')
         pickle.dump(s,pickle_out)
         pickle_out.close()
+        try:
 
-        print(res)
+            ret_md5 = re.findall('<(.*)>',res)[0]
+            if ret_md5==orig_md5:
+                print(res)
+                print('md5sum--ok')
+            else :
+                print(res)
+                print('md5sum--NOT OK')
+        except:
+            print(res)
+
 
     except:
 
