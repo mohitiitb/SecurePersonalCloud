@@ -1,7 +1,14 @@
 <html>
 
    <body>
-      You are : <strong>{{user_id}}</strong>
+
+      You are : <strong>{{username}}</strong>
+
+      <ul>
+          {% for e1,e2 in data %}
+          <li><a href= {{e2}}>{{e1}}</a></li>
+          {% endfor %}
+      </ul>
 
    </body>
 
