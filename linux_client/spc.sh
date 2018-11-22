@@ -32,10 +32,10 @@ Written by Undefined Variables.
 
     client) exec python3 "$base_path"client.py "${@:2}";;
 
-    observe) if [[ -d $2 ]];then
-                exec python3 "$base_path"add_for_observe.py 1 "`realpath $2`"
-             elif [[ -f $2 ]];then
-                exec python3 "$base_path"add_for_observe.py 0 "`realpath $2`"
+    observe) if [[ -d "$2" ]];then
+                exec python3 "$base_path"add_for_observe.py 1 "`realpath "$2"`"
+            elif [[ -f "$2" ]];then
+                exec python3 "$base_path"add_for_observe.py 0 "`realpath "$2"`"
              else
                 echo "missing file name type spc help to know more"
              fi;;

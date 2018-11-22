@@ -98,8 +98,8 @@ if sys.argv[1]=='0':
 
 else:
     x = input('Enter the path you want to download : ')
-    y = input('Where to download? : ')
+    #y = input('Where to download? : ')
     #x = '/home/manasshukla/identity.jpeg'
-    #y = '/home/manasshukla/Dropbox/'
+    y = '/home/manasshukla/Dropbox/'
 
     download(x,y)
