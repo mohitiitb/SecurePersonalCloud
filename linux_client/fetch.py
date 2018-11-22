@@ -1,6 +1,8 @@
-import sys,json
+import sys,json,os
 import requests,pickle
 from termcolor import colored
+import en_de
+import hashlib
 
 base_path = sys.path[0]+'/'
 
@@ -40,25 +42,41 @@ def viewUploads():
         print("#FAIL:Not Logged In")
         sys.exit()
 
-def download(fpath):
+def download(fpath,save_at):
+    if not save_at.endswith('/'):
+        save_at += '/'
+
+
+
     url = sjs['base_url'] + 'file_download/'
     data = {'fpath':fpath}
-    try:
+    if True:
         pickle_in = open(base_path+'session.p','rb')
         s = pickle.load(pickle_in)
         pickle_in.close()
-        res = s.post(url=url,data=data).text
+        res = s.post(url=url,data=data).content
         pickle_out = open(base_path+'session.p','wb')
         pickle.dump(s,pickle_out)
         pickle_out.close()
 
-        if res.startswith('#FAIL'):
+        if False and res.startswith('#FAIL'):
             print('Not logged in')
             return None
         else:
-            print(res)
+            #print(res)
+            file_name = fpath.split('/')[-1]
 
-    except:
+
+
+            open(base_path+'tmp.aes','wb').write(res)
+            #
+            en_de.decrypt(base_path+'tmp.aes',save_at+file_name)
+            os.remove(base_path+'tmp.aes')
+
+
+
+
+    else:
         return "#FAIL:Not Logged In"
 
 
@@ -67,7 +85,7 @@ def download(fpath):
 
 if sys.argv[1]=='0':
     res = viewUploads()
-    print(res)
+    #print(res)
     if isinstance(res,str) and res.startswith('#FAIL'):
         print(res)
     else:
@@ -79,4 +97,9 @@ if sys.argv[1]=='0':
 
 
 else:
-    download(input('Enter the path you want to download : '))
+    x = input('Enter the path you want to download : ')
+    y = input('Where to download? : ')
+    #x = '/home/manasshukla/identity.jpeg'
+    #y = '/home/manasshukla/Dropbox/'
+
+    download(x,y)
