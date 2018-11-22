@@ -15,6 +15,8 @@ class file_upload_form(forms.Form):
     file = forms.FileField()
     fname = forms.CharField(max_length=100)
     ftype = forms.CharField(max_length=50)
+    fdesc = forms.CharField(max_length=1000)
+    md5sum = forms.CharField(max_length=50)
     fpath = forms.CharField(max_length=100)
 
 class file_download_form(forms.Form):

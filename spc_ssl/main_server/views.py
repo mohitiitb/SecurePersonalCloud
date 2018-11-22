@@ -231,20 +231,27 @@ def file_download(request):
 
             if request.session.has_key('id'):
                 id = request.session['id']
-                entries = global_data.objects.filter(user_id=id).values_list('fpath')
-                response = {}
-                for e in entries:
-                    if (e[0].strip()).startswith(fpath):
-                        #for now this is wrong need to verify the fpath
-                        ### IMPORTANT ###
-                        try:
-                            response[e[0]] = str(global_data.objects.get(user_id=id,
-                                            fpath=e[0]).file)
-                        except:
-                            continue
+                # entries = global_data.objects.filter(user_id=id).values_list('fpath')
+                # response = {}
+                # for e in entries:
+                #     if (e[0].strip()).startswith(fpath):
+                #         #for now this is wrong need to verify the fpath
+                #         ### IMPORTANT ###
+                #         try:
+                #             response[e[0]] = global_data.objects.get(user_id=id,
+                #                             fpath=e[0]).file
+                #         except:
+                #             continue
+                #
+                # return HttpResponse(json.dumps(response))
+                try:
 
-                return HttpResponse(json.dumps(response))
-
+                    contents = global_data.objects.get(user_id=id,fpath=fpath).file
+                    response = HttpResponse(contents)
+                    response['Content-Disposition'] = 'attachment;filename=blob.bin'
+                    return response
+                except:
+                    return HttpResponse('#FAIL: No such file on server')
 
 
             else:

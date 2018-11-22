@@ -9,6 +9,7 @@ urlpatterns = [
     url('^login',views.login,name='login'),
     url('^logout',views.logout,name='logout'),
     url('^file_upload',views.file_upload,name='file_upload'),
+    url('^get_md5',views.get_md5,name='get_md5'),
     url('^file_view',views.file_view,name='file_view'),
     url('^file_download',views.file_download,name='download'),
 ]
