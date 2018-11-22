@@ -9,7 +9,7 @@ cjs = json.load(open(base_path+'client.js'))
 sjs = json.load(open(base_path+'server.js'))
 
 #bad way but just do it for now
-
+# print a-b , a+b, and aintersectionb.
 username = cjs['username']
 password = cjs['password']
 
