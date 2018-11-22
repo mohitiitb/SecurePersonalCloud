@@ -49,7 +49,7 @@ def absoluteFilePaths(directory):
 observe_set=set([])
 
 def get_all_files_on_observe():
-    json_data=open('/home/mohit/linux_client/observe.js').read()
+    json_data=open(base_path+'observe.js').read()
     data=json.loads(json_data)
     for key in data:
         if os.path.isfile(key):
@@ -82,12 +82,12 @@ intersection=observe_set.intersection(server_set)
 for ele in intersection:
     print(colored(ele[0], 'blue'), colored("  (" + ele[1] + ")", 'green'))
 
+print(colored("\nFiles on Server - Observe:",'red'))
 
-print(colored("\nFiles on Observe - Server:",'red'))
 
 for ele in server_set-observe_set:
     print(colored(ele[0], 'blue'), colored("  (" + ele[1] + ")", 'green'))
-print(colored("\nFiles on Server - Observe:",'red'))
+print(colored("\nFiles on Observe - Server:",'red'))
 
 for ele in observe_set-server_set:
     print(colored(ele[0], 'blue'), colored("  (" + ele[1] + ")", 'green'))

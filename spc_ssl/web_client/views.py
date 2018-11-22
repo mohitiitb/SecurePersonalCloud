@@ -10,21 +10,28 @@ from main_server.views import reset_password as main_reset_password
 
 def sign_up(request):
     if request.method == 'POST':
-        res = main_sign_up(request).content.decode()
+        msg = main_sign_up(request).content.decode()
 
-        if res.startswith("#FAIL"):
-            return render(request,'sign_up.html')
+        if msg.startswith("#FAIL"):
+            return HttpResponse(msg)
         else:
-            return HttpResponse(res)
+            return render(request,'login.html')
     else:
         return render(request,'sign_up.html')
 
 def login(request):
     if request.method == 'POST':
         res = main_login(request)
-        return HttpResponse(res.content.decode())
+        msg = res.content.decode()
+        if msg.startswith('#FAIL'):
+            return HttpResponse(msg)
+        else:
+            return render(request,'logged_in.html',{'user_id':request.session['id']})
     else:
-        return render(request,'login.html')
+        if request.session.has_key('id'):
+            return render(request,'logged_in.html',{'user_id':request.session['id']})
+        else:
+            return render(request,'login.html')
 
 
 

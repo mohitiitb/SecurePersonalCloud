@@ -157,16 +157,38 @@ def file_upload(request):
                 id = request.session['id']
 
                 #for now allow same file to be uploaded again will look into it later
-                entry = global_data(user_id=id,
-                                    ftype=ftype,
-                                    md5sum = md5sum,
-                                    fname=fname,
-                                    fdesc=fdesc,
-                                    file=request.FILES['file'].read(),
-                                    fpath=fpath
-                                    )
-                entry.save()
-                return HttpResponse('#File Successfully uploaded#')
+                file = request.FILES['file'].read()
+                try:
+
+                    entry=global_data.objects.get(user_id=id,
+                                                ftype=ftype,
+                                                fname=fname,
+                                                )
+                    if entry.md5sum == md5sum:
+                        return HttpResponse('#Already present :: NO CHANGE MADE#')
+                    else :
+                        entry.file = file
+                        entry.md5sum = md5sum
+                        entry.save()
+                        check_md5 = hashlib.md5(file).hexdigest()
+                        return HttpResponse('#File Successfully [Overwritten] md5sum = <' + str(check_md5)+'>#')
+
+
+
+
+                except:
+
+                    check_md5 = hashlib.md5(file).hexdigest()
+                    entry = global_data(user_id=id,
+                                        ftype=ftype,
+                                        md5sum = md5sum,
+                                        fname=fname,
+                                        fdesc=fdesc,
+                                        file=file,
+                                        fpath=fpath
+                                        )
+                    entry.save()
+                    return HttpResponse('#File Successfully uploaded md5sum = <' + str(check_md5)+'>#')
 
             else:
                 return HttpResponse('#FAIL:Not Logged In#')
