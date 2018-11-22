@@ -48,12 +48,12 @@ def absoluteFilePaths(directory):
 def sync_file(file):
     #file is file abs path
     data = file_to_dict(file)
-    
-    try:
+
+    if True:
         en_de.encrypt(file,base_path+'tmp.aes')
         files = {'file':open(base_path+'tmp.aes','rb')}
 
-    except:
+    else:
         print('''Failed : File not found in its added location
                     Maybe its deleted''')
         return
