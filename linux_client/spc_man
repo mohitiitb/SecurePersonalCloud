@@ -37,75 +37,69 @@ Prints information about the server.
 
 
 \fBspc client \fIsign_up
-Prints information about the client.
+Allows the new clients to register.
 
 .TP
 
 
 \fBspc client \fIreset_password
-Prints information about the client.
+Allows the existing clients to change their password.
 
 .TP
 
 
 \fBspc client \fIlogin
-Prints information about the client.
+Allows the registered clients to login.
 
 .TP
 
 
 \fBspc client \fIlogout
-Prints information about the client.
+Allows logged in clients to log out.
 
 .TP
 
 
 \fBspc client \fIedit
-Prints information about the client.
-
-.TP
-
-
-\fBspc client \fIinfo
-Prints information about the client.
+Logs out current client and logs in new client.
 
 .TP
 
 
 \fBspc observe \fB[DIR/FILE PATH]
-Prints information about the client.
+Stores a json object of the files to be Uploaded.
 
 .TP
 
 
 \fBspc ignore \fB[DIR/FILE PATH]
-Prints information about the client.
+Removes the particular json object from observed data.
 
 .TP
 
 
 \fBspc en-de \fB[SCHEMA]
-Prints information about the client.
+to be completed...
 
 .TP
 
 \fBspc sync \fB[DIR/FILE PATH]
-Prints information about the client.
+Uploads the observed files to the server.
 
 .TP
 
 \fBspc status
-Prints information about the client.
+Prints the server.
 
 .TP
 
 \fBspc viewUploads
-Prints information about the client.
+Prints the directory tree of the uploaded files.
 
 .TP
 
 \fBspc download
-Prints information about the client.
+Downloads the file from server to the client.
 
 .TP
 
