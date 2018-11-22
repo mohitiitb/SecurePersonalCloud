@@ -5,7 +5,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
+from main_server.models import registered_clients,global_data
 from main_server.views import reset_password as main_reset_password
+import re
 # Create your views here.
 
 def sign_up(request):
@@ -15,7 +17,8 @@ def sign_up(request):
         if msg.startswith("#FAIL"):
             return HttpResponse(msg)
         else:
-            return render(request,'login.html')
+            request.method='GET'
+            return redirect(login)
     else:
         return render(request,'sign_up.html')
 
@@ -26,18 +29,50 @@ def login(request):
         if msg.startswith('#FAIL'):
             return HttpResponse(msg)
         else:
-            return render(request,'logged_in.html',{'user_id':request.session['id']})
+            # user_id = request.session['id']
+            # user=registered_clients.objects.get(id=user_id)
+            # files=tuple(global_data.objects.filter(user_id=5).values_list("fname","ftype"))
+            # return render(request,'logged_in.html',{'username':user.username,'files':files})
+            return homepage(request,'')
+
     else:
         if request.session.has_key('id'):
-            return render(request,'logged_in.html',{'user_id':request.session['id']})
+            # user_id = request.session['id']
+            # user=registered_clients.objects.get(id=user_id)
+            # files=tuple(global_data.objects.filter(user_id=5).values_list("fname","ftype"))
+            # return render(request,'logged_in.html',{'username':user.username,'files':files})
+            return homepage(request,'')
         else:
             return render(request,'login.html')
 
+def homepage(request,root):
+    user_id = request.session['id']
+    user=registered_clients.objects.get(id=user_id)
+    files=tuple(global_data.objects.filter(user_id=5).values_list("fname","ftype"))
+    data=set()
+    regex = root + '/(.*?)/'
+    for f in files:
+        ##### if error then its a file #####
+        try:
+
+            dir = re.findall(regex,f[0])[0]
+        except:
+            continue
+        next_root = root+'/'+dir
+        #url = 'http://localhost:8000/web_client/homepage/root='+next_root
+        url = '/web_client/homepage/root='+next_root
+        data.add((dir,url))
+
+    return render(request,'logged_in.html',{'username':user.username,'data':data})
 
 
 def reset_password(request):
     if request.method == 'POST':
-        res = main_reset_password(request)
-        return HttpResponse(res.content.decode())
+        msg = main_reset_password(request).content.decode()
+        if msg.startswith("#FAIL"):
+            return HttpResponse(msg)
+        else:
+            request.method='GET'
+            return redirect(login)
     else:
         return render(request,'reset_password.html')
