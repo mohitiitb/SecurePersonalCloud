@@ -16,7 +16,7 @@ def encrypt_AES(file,password,save_as):
     	message=f.read()
     IV = Random.new().read(BLOCK_SIZE)
     aes = AES.new(password, AES.MODE_CFB, IV, segment_size=128)
-    with open ("enc.bin","wb") as f:
+    with open (save_as,"wb") as f:
     	f.write(base64.b64encode(IV + aes.encrypt(pad(message))))
 
 def decrypt_AES(file,password,save_as):
@@ -26,6 +26,5 @@ def decrypt_AES(file,password,save_as):
     IV = encrypted[:BLOCK_SIZE]
     #print(len(IV))
     aes = AES.new(password, AES.MODE_CFB, IV, segment_size=128)
-    with open ("out.jpeg","wb") as f:
+    with open (save_as,"wb") as f:
     	f.write(unpad(aes.decrypt(encrypted[BLOCK_SIZE:])))
-

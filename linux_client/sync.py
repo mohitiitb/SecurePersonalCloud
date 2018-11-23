@@ -6,6 +6,9 @@ import hashlib
 import detect_type
 import en_de
 import re
+import signal
+
+
 
 '''
     this script syncs file/dir to server whose info is given in server.js
@@ -106,12 +109,12 @@ def sync_file(file):
     #file is file abs path
     data = file_to_dict(file)
 
-    try:
+    if True:
         en_de.encrypt(file,base_path+'tmp.aes',schema,base_path)
         orig_md5 = hashlib.md5(open(base_path+'tmp.aes','rb').read()).hexdigest()
         files = {'file':open(base_path+'tmp.aes','rb')}
 
-    except:
+    else:
         print('''Failed : File not found in its added location
                     Maybe its deleted''')
         return
@@ -152,6 +155,14 @@ def sync_dir(dir):
     for file in absoluteFilePaths(dir):
         sync_file(file)
 
+
+def handler(signum, frame):
+    print('Sync Interuppted in between')
+    print('locking out database----')
+    lock_out()
+    sys.exit(2)
+
+signal.signal(signal.SIGINT, handler)
 
 
 try:
