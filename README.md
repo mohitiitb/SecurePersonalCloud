@@ -1,4 +1,4 @@
-#SECURE PERSONAL CLOUD
+# SECURE PERSONAL CLOUD
 
 ## Clients
 
@@ -24,5 +24,5 @@
 
 ## Installation Guide
 
-* execute sudo bash install.sh <directory where you wish to install it>
+* execute sudo bash install.sh _directory where you wish to install it_
 * sudo is required for the installation of **man**
