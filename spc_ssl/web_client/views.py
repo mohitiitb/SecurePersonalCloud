@@ -52,16 +52,21 @@ def homepage(request,root):
     data=set()
     regex = root + '/(.*?)/'
     regforfile=root+'/(.*)'
-    #if()
+    #check for file
     #print(regex)
     for f in files:
         ##### if error then its a file #####
+        if(f[0] == root):
+            var = global_data.objects.get(user_id=user_id,fname=f[0])
+            fname = var.fname
+            file_data = var.file
+            return render(request,'view_file.html',{'fname':fname,'file_data':file_data})
         try:
             dir = re.findall(regex,f[0])[0]
         except:
             filename=re.findall(regforfile,f[0])
             if len(filename)>0:
-                path='http://localhost:8000/web_client/homepage/root='+root+'/'+filename[0]
+                path='/web_client/homepage/root='+root+'/'+filename[0]
                 data.add((filename[0],path,f[1]))
             continue
             #check for file
