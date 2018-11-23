@@ -1,3 +1,6 @@
+import base64
+import pyDes
+
 from django.shortcuts import render
 from main_server.views import sign_up as main_sign_up
 from main_server.views import login as main_login
@@ -8,9 +11,10 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from main_server.models import registered_clients,global_data
 from main_server.views import reset_password as main_reset_password
-import re
+import re,os
+import sys
 # Create your views here.
-
+base_path = '/home/mohit/SecurePersonalCloud/'
 def sign_up(request):
     if request.method == 'POST':
         msg = main_sign_up(request).content.decode()
@@ -65,7 +69,11 @@ def homepage(request,root):
         if(f[0] == root):
             var = global_data.objects.get(user_id=user_id,fname=f[0])
             fname = var.fname
-            file_data = var.file
+            file_data = str(var.file)
+            file_data = file_data[2:]
+            file_data = file_data[:-1]
+
+                #file_data=base64.b64decode(file_data)
             return render(request,'view_file.html',{'fname':fname,'file_data':file_data})
         try:
             dir = re.findall(regex,f[0])[0]

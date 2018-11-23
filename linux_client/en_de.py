@@ -3,7 +3,7 @@ import AES
 import pickle
 import RSA
 import DES
-
+import bf
 #base_path = sys.path[0]+'/'
 #base_path= '/home/manasshukla/SecurePersonalCloud/linux_client/'
 
@@ -30,6 +30,12 @@ def encrypt(file,save_as,schema,base_path):
             passwd = pickle.load(pickle_in)
             pickle_in.close()
             DES.encrypt_DES(file,passwd,save_as)
+        elif schema=='BF':
+            pickle_in = open(base_path+'en-de/bf.p','rb')
+            #print(base_path)
+            passwd = pickle.load(pickle_in)
+            pickle_in.close()
+            bf.encrypt_bf(file,passwd,save_as)
 
         else :
             print('pending')
@@ -52,6 +58,11 @@ def decrypt(file,save_as,schema,base_path):
             passwd = pickle.load(pickle_in)
             pickle_in.close()
             DES.decrypt_DES(file,passwd,save_as)
+        elif schema=='BF':
+            pickle_in = open(base_path+'en-de/bf.p','rb')
+            passwd = pickle.load(pickle_in)
+            pickle_in.close()
+            bf.decrypt_bf(file,passwd,save_as)
         else :
             print('pending')
             sys.exit(2)
