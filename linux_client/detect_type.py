@@ -1,6 +1,6 @@
 import magic
 
-audio=['.aif','.cda','mid','.midi',',mp3','.mpa','.ogg','.wav','.wma','.wpl']
+audio=['.aif','.cda','mid','.midi','.mp3','.mpa','.ogg','.wav','.wma','.wpl']
 compressed=['.7z','.arj','.deb',',pkg','.rar','..rpm','.gz','.z','.zip','.iso']
 database=['.csv','.dat','.db','.dbf','.log','.mdb','.sav','.sql','.tar','.xml']
 exectables=['.apk','.bat','.exe','.cgi','.com','.gadget','.jar','.py','.wsf']
