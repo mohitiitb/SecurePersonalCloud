@@ -15,7 +15,7 @@
 	<script src="https://cdn.rawgit.com/CryptoStore/crypto-js/3.1.2/build/rollups/aes.js"></script>
 	<script src="https://cdn.rawgit.com/CryptoStore/crypto-js/3.1.2/build/components/mode-cfb-min.js"></script>
 <script >
-	var base64ciphertextFromPython = {{ file_data }};
+	var base64ciphertextFromPython = '{{ file_data }}';
     var ciphertext = CryptoJS.enc.Base64.parse(base64ciphertextFromPython);
 
     // split iv and ciphertext
@@ -25,7 +25,7 @@
     ciphertext.words.splice(0, 4); // delete 4 words = 16 bytes
     ciphertext.sigBytes -= 16;
 
-    var key = 0CryptoJS.enc.Utf8.parse("ritikroongta");
+    var key = CryptoJS.enc.Utf8.parse("124567890123456");
 
     // decryption
     var decrypted = CryptoJS.AES.decrypt({ciphertext: ciphertext}, key, {
@@ -33,7 +33,9 @@
       mode: CryptoJS.mode.CFB
     });
     txt=decrypted.toString(CryptoJS.enc.Utf8);
-    document.getElementById("file").innerHTML = base64ciphertextFromPython;
+    //document.getElementById("file").innerHTML = '{{ file_data }}';
+    //document.getElementById("file").innerHTML = "hello";
+    document.getElementById("file").innerHTML =txt;
     <!--console.log (txt);-->
 
 </script>
