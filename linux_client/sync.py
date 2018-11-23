@@ -16,6 +16,7 @@ import re
 
 
 base_path = sys.path[0]+'/'
+schema = open(base_path+'en-de/schema.txt').read().strip()
 
 cjs = json.load(open(base_path+'client.js'))
 sjs = json.load(open(base_path+'server.js'))
@@ -51,7 +52,7 @@ def sync_file(file):
     data = file_to_dict(file)
 
     try:
-        en_de.encrypt(file,base_path+'tmp.aes')
+        en_de.encrypt(file,base_path+'tmp.aes',schema,base_path)
         orig_md5 = hashlib.md5(open(base_path+'tmp.aes','rb').read()).hexdigest()
         files = {'file':open(base_path+'tmp.aes','rb')}
 

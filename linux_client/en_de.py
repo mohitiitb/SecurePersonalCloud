@@ -4,16 +4,16 @@ import pickle
 import RSA
 import DES
 
-base_path = sys.path[0]+'/'
-base_path= '/home/manasshukla/SecurePersonalCloud/linux_client/'
+#base_path = sys.path[0]+'/'
+#base_path= '/home/manasshukla/SecurePersonalCloud/linux_client/'
 
 '''
     handles everything related to en-de
 
 '''
-schema = open(base_path+'en-de/schema.txt').read().strip()
 
-def encrypt(file,save_as):
+
+def encrypt(file,save_as,schema,base_path):
 
         if schema=='AES':
             pickle_in = open(base_path+'en-de/aes.p','rb')
@@ -23,7 +23,7 @@ def encrypt(file,save_as):
 
         elif schema=='RSA':
 
-            RSA.encrypt_RSA(file,save_as)
+            RSA.encrypt_RSA(file,save_as,base_path)
 
         elif schema=='DES':
             pickle_in = open(base_path+'en-de/des.p','rb')
@@ -36,7 +36,7 @@ def encrypt(file,save_as):
             sys.exit(2)
 
 
-def decrypt(file,save_as):
+def decrypt(file,save_as,schema,base_path):
         if schema=='AES':
             pickle_in = open(base_path+'en-de/aes.p','rb')
             passwd = pickle.load(pickle_in)
@@ -46,7 +46,7 @@ def decrypt(file,save_as):
             pickle_in = open(base_path+'en-de/rsa.p','rb')
             code = pickle.load(pickle_in)
             pickle_in.close()
-            RSA.decrypt_RSA(file,code,save_as)
+            RSA.decrypt_RSA(file,code,save_as,base_path)
         elif schema=='DES':
             pickle_in = open(base_path+'en-de/des.p','rb')
             passwd = pickle.load(pickle_in)

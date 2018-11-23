@@ -159,3 +159,6 @@ elif cmd ==['logout']:
     logout()
 elif cmd == ['edit']:
     edit()
+
+else :
+    print('Invalid arguments ,See man page for more details')

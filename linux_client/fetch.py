@@ -5,6 +5,8 @@ import en_de
 import hashlib
 
 base_path = sys.path[0]+'/'
+schema = open(base_path+'en-de/schema.txt').read().strip()
+
 
 cjs = json.load(open(base_path+'client.js'))
 sjs = json.load(open(base_path+'server.js'))
@@ -70,7 +72,7 @@ def download(fpath,save_at):
 
             open(base_path+'tmp.aes','wb').write(res)
             #
-            en_de.decrypt(base_path+'tmp.aes',save_at+file_name)
+            en_de.decrypt(base_path+'tmp.aes',save_at+file_name,schema,base_path)
             os.remove(base_path+'tmp.aes')
 
 

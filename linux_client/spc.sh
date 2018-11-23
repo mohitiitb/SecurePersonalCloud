@@ -5,6 +5,8 @@
 # according to commands given in through command line
 # it calls functions imported from server and client
 
+
+
 #changes for set up to work
 #sed -e 's/base_path = .*/base_path=hallo/g'
 #v=`realpath $0`
@@ -26,7 +28,21 @@ Written by Undefined Variables.
 ####################";;
 
 
-    help) echo "--pending--";;
+    help) echo "Following commands are usable :"
+        echo "version"
+        echo "help"
+        echo "server"
+        echo "client"
+        echo "status"
+        echo "observe"
+        echo "ignore"
+        echo "viewUploads"
+        echo "download"
+        echo "en-de"
+        echo "sync"
+        echo "see man page for more details"
+
+    ;;
 
     server) exec python3 "$base_path"server.py "${@:2}";;
 
@@ -47,7 +63,7 @@ Written by Undefined Variables.
     en-de) if [[ $# -gt 1 ]];then
              exec python3 "$base_path"en_de.py $2
          else
-             echo "---usage---"
+             echo "missing arguments ,see man page for more details"
          fi;;
     sync) if [[ $# -gt 1 ]];then
              exec python3 "$base_path"sync.py "`realpath $2`"
