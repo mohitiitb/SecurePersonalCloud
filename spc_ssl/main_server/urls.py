@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     url('^check_server',views.check_server,name='check_server'),
     url('^sign_up',views.sign_up,name='sign_up'),
+    url('^request_for_sync',views.request_for_sync,name='request_for_sync'),
+    url('^request_for_desync',views.request_for_desync,name='request_for_desync'),
     url('^reset_password',views.reset_password,name='reset_password'),
     url('^login',views.login,name='login'),
     url('^logout',views.logout,name='logout'),

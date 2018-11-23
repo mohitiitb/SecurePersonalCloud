@@ -98,6 +98,48 @@ def reset_password(request):
         return HttpResponse('#FAIL:Get method not allowed#')
 
 @csrf_exempt
+def request_for_sync(request):
+    if request.method == "POST":
+        if request.session.has_key('id'):
+            id = request.session['id']
+            user = registered_clients.objects.get(id=id)
+            if user.is_syncing==True:
+                return HttpResponse('#REJECTED')
+            else:
+                user.is_syncing=True
+                user.save()
+                return HttpResponse('#ACCEPTED')
+
+
+        else:
+
+            return HttpResponse('#FAIL:Not Logged In#')
+    else:
+        return HttpResponse('#FAIL:Get method not allowed#')
+
+
+@csrf_exempt
+def request_for_desync(request):
+    if request.method == "POST":
+        if request.session.has_key('id'):
+            id = request.session['id']
+            user = registered_clients.objects.get(id=id)
+            if user.is_syncing==True:
+                user.is_syncing = False
+                user.save()
+
+            return HttpResponse('#DONE')
+
+
+        else:
+
+            return HttpResponse('#FAIL:Not Logged In#')
+    else:
+        return HttpResponse('#FAIL:Get method not allowed#')
+
+
+
+@csrf_exempt
 def login(request):
 
     if request.method == "POST":

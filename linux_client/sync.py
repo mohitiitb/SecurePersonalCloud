@@ -23,8 +23,63 @@ sjs = json.load(open(base_path+'server.js'))
 
 #bad way but just do it for now
 url = sjs['base_url'] + 'file_upload/'
+url_lock_in = sjs['base_url'] + 'request_for_sync/'
+url_lock_out = sjs['base_url'] + 'request_for_desync/'
+
 username = cjs['username']
 password = cjs['password']
+
+
+def lock_in():
+    try:
+
+        pickle_in = open(base_path+'session.p','rb')
+        s = pickle.load(pickle_in)
+        pickle_in.close()
+        res = s.post(url=url_lock_in).text
+        pickle_out = open(base_path+'session.p','wb')
+        pickle.dump(s,pickle_out)
+        pickle_out.close()
+
+        if res.startswith('#FAIL'):
+            print(res)
+            sys.exit(2)
+        if res.startswith('#ACCEPTED'):
+            return True
+        if res.startswith('#REJECTED'):
+            return False
+
+
+
+    except:
+        print("Please login first!")
+        sys.exit(2)
+
+
+
+def lock_out():
+    try:
+
+        pickle_in = open(base_path+'session.p','rb')
+        s = pickle.load(pickle_in)
+        pickle_in.close()
+        res = s.post(url=url_lock_out).text
+        pickle_out = open(base_path+'session.p','wb')
+        pickle.dump(s,pickle_out)
+        pickle_out.close()
+
+        if res.startswith('#FAIL'):
+
+            print('WARNING : PLease login and release the lock!')
+        print(res)
+
+
+
+
+
+    except:
+        print("Please login first!")
+        sys.exit(2)
 
 
 #detect type and all other stuff
@@ -105,6 +160,13 @@ except :
     print('Error: observe.js not found')
     sys.exit(2)
 
+#lock_in
+ask =lock_in()
+if ask==False:
+    print('Sync Failed ,It seems some other machine is syncing ,Please try later')
+    sys.exit(2)
+
+
 if len(sys.argv)==1:
     # sync all
     for k,v in js.items():
@@ -118,6 +180,9 @@ if len(sys.argv)==1:
 else:
     #sync single
     p = sys.argv[1]
+    if p == '2':
+        lock_out()
+        sys.exit(2)
     if p in js:
         if js[p]['type'] == 1:
             sync_dir(p)
@@ -128,3 +193,5 @@ else:
 
     else:
         print('ERROR : File is not yet added to observed mode')
+
+lock_out()
