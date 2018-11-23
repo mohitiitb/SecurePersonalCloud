@@ -51,17 +51,24 @@ def homepage(request,root):
     files=tuple(global_data.objects.filter(user_id=5).values_list("fname","ftype"))
     data=set()
     regex = root + '/(.*?)/'
+    regforfile=root+'/(.*)'
+    #if()
+    #print(regex)
     for f in files:
         ##### if error then its a file #####
         try:
-
             dir = re.findall(regex,f[0])[0]
         except:
+            filename=re.findall(regforfile,f[0])
+            if len(filename)>0:
+                path='http://localhost:8000/web_client/homepage/root='+root+'/'+filename[0]
+                data.add((filename[0],path,f[1]))
             continue
+            #check for file
         next_root = root+'/'+dir
         #url = 'http://localhost:8000/web_client/homepage/root='+next_root
         url = '/web_client/homepage/root='+next_root
-        data.add((dir,url))
+        data.add((dir,url,"dir"))
 
     return render(request,'logged_in.html',{'username':user.username,'data':data})
 
