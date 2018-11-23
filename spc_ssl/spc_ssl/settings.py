@@ -82,7 +82,7 @@ DATABASES = {
     }
 }
 
-#base_path = sys.path[0]+'/'
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
