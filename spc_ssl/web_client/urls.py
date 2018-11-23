@@ -6,6 +6,7 @@ urlpatterns = [
     url('^sign_up',views.sign_up,name='sign_up'),
     url('^reset_password',views.reset_password,name='reset_password'),
     url('^login',views.login,name='login'),
+    url('^logout',views.logout,name='logout'),
     url('^homepage/root=(.+)',views.homepage,name='homepage'),
 
 ]

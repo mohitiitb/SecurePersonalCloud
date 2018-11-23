@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from main_server.views import sign_up as main_sign_up
 from main_server.views import login as main_login
+from main_server.views import logout as main_logout
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -45,23 +46,40 @@ def login(request):
         else:
             return render(request,'login.html')
 
+def logout(request):
+    main_logout(request)
+    request.method='GET'
+    return login(request)
+
 def homepage(request,root):
     user_id = request.session['id']
     user=registered_clients.objects.get(id=user_id)
     files=tuple(global_data.objects.filter(user_id=5).values_list("fname","ftype"))
     data=set()
     regex = root + '/(.*?)/'
+    regforfile=root+'/(.*)'
+    #check for file
+    #print(regex)
     for f in files:
         ##### if error then its a file #####
+        if(f[0] == root):
+            var = global_data.objects.get(user_id=user_id,fname=f[0])
+            fname = var.fname
+            file_data = var.file
+            return render(request,'view_file.html',{'fname':fname,'file_data':file_data})
         try:
-
             dir = re.findall(regex,f[0])[0]
         except:
+            filename=re.findall(regforfile,f[0])
+            if len(filename)>0:
+                path='/web_client/homepage/root='+root+'/'+filename[0]
+                data.add((filename[0],path,f[1]))
             continue
+            #check for file
         next_root = root+'/'+dir
         #url = 'http://localhost:8000/web_client/homepage/root='+next_root
         url = '/web_client/homepage/root='+next_root
-        data.add((dir,url))
+        data.add((dir,url,"dir"))
 
     return render(request,'logged_in.html',{'username':user.username,'data':data})
 
