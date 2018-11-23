@@ -31,3 +31,5 @@ if len(cmd)==2 and cmd[0]=='set-url':
 
 if len(cmd)==1 and cmd[0]=='info':
     print(open(base_path+'server.js').read())
+else:
+    print('Invalid arguments , See man page for details')

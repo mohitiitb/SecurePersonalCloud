@@ -4,11 +4,11 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 import base64
 import sys
 
-base_path = sys.path[0]+'/'
+#base_path = sys.path[0]+'/'
 #edit later
 
 
-def generate_key(code):
+def generate_key(code,base_path):
 
 	key = RSA.generate(2048)
 	encrypted_key = key.exportKey(passphrase=code, pkcs=8)
@@ -20,7 +20,7 @@ def generate_key(code):
 
 
 
-def encrypt_RSA(file,save_as):
+def encrypt_RSA(file,save_as,base_path):
 	with open(file, 'rb') as f:
 		data=f.read()
 		encoded=base64.encodestring(data)
@@ -39,7 +39,7 @@ def encrypt_RSA(file,save_as):
 
 
 
-def decrypt_RSA(file,code,save_as):
+def decrypt_RSA(file,code,save_as,base_path):
 	with open(file, 'rb') as fobj:
 		private_key = RSA.import_key(
 		open(base_path+'en-de/priv_key.bin').read(),
