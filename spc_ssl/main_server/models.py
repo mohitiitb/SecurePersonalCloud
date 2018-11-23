@@ -5,7 +5,7 @@ from django.db import models
 class registered_clients(models.Model):
     username = models.CharField(max_length = 100)
     password = models.CharField(max_length = 100)
-
+    is_syncing = models.BooleanField(default=False)
     class Meta:
         db_table = 'registered_clients'
 

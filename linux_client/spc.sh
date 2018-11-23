@@ -74,5 +74,6 @@ Written by Undefined Variables.
     status) exec python3 "$base_path"status.py;;
     viewUploads) exec python3 "$base_path"fetch.py 0;;
     download) exec python3 "$base_path"fetch.py 1 ;;
+    lock_out) exec python3 "$base_path"sync.py 2 ;;
 
 esac
