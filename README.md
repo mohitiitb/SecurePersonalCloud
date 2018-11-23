@@ -24,5 +24,5 @@
 
 ## Installation Guide
 
-* execute sudo bash install.sh _directory where you wish to install it_
+* execute sudo bash install.sh _[[directory where you wish to install it]]_
 * sudo is required for the installation of **man**
